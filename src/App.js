@@ -4,6 +4,10 @@ import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import TaskList from './components/taskList.jsx';
 import axios from 'axios';
 
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 function App() {
   function Home(){
     return <h1> index </h1>; 
