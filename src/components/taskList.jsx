@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TaskCard from './taskCard.jsx';
 
 
 
 const TaskList = (props) => {
 
-  
   return (
     <div>
+      {/* {console.log(props)} */}
       {props.taskListState.map(task =>
         <TaskCard key={task.id} task={task} />
       )}
@@ -15,11 +15,11 @@ const TaskList = (props) => {
   );
 }
 
-const listStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-}
+// const listStyle = {
+//   display: 'flex',
+//   flexDirection: 'column',
+//   justifyContent: 'space-between',
+//   alignItems: 'flex-start',
+// }
  
 export default TaskList;

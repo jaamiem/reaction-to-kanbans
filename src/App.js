@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Board from "./pages/board.js"
-import TaskList from './components/taskList.jsx';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Board from './pages/board.jsx';
 import axios from 'axios';
 
 import 'primereact/resources/themes/nova-light/theme.css';
@@ -12,24 +11,21 @@ import 'primeicons/primeicons.css';
 
 
 function App() {
-  function Home(){
-    return <h1> index </h1>; 
-  }
-
-  const [tasksListState, changeTaskList] = useState([]);
+  const [taskListState, changeTaskList] = useState([]);
 
   axios.get('https://jsonplaceholder.typicode.com/posts?_limit=15')
-    .then(res => changeTaskList(res.data));
+    .then(res => changeTaskList(res.data))
+    .catch(err => console.error(err));
 
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Home} />
+        {/* <Route path="/" exact component={Home} /> */}
         <Route 
-          path='/task' 
+          path='/' 
           exact 
           render={(props) => 
-            <Board taskListState={tasksListState} />
+            <Board taskListState={taskListState} />
         } />
       </Switch>
     </Router>
