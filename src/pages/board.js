@@ -5,7 +5,7 @@ const Board = (props) => {
 
     return (
         <div>
-
+            <TaskList taskListState={props.tasksListState} />
         </div>
     );
 }

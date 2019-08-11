@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Board from "./pages/Board.js"
 import TaskList from './components/taskList.jsx';
 import axios from 'axios';
 
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+
+
 
 function App() {
   function Home(){
@@ -26,7 +29,7 @@ function App() {
           path='/task' 
           exact 
           render={(props) => 
-            <TaskList taskListState={tasksListState} />
+            <Board taskListState={tasksListState} />
         } />
       </Switch>
     </Router>
