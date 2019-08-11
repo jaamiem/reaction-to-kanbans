@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Board from "./pages/Board.js"
+import Board from "./pages/board.js"
 import TaskList from './components/taskList.jsx';
 import axios from 'axios';
 
