@@ -14,5 +14,12 @@ const TaskList = (props) => {
     </div>
   );
 }
+
+const listStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+}
  
 export default TaskList;
