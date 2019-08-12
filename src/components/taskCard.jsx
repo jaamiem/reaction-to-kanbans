@@ -1,7 +1,12 @@
 import React from 'react';
 import { Card } from 'primereact/card';
 
-const TaskCard = (props) => {
+function abridgeText(text, length) {
+  return (text.length > length) ? 
+    (text.slice(0,length) + '...') : text;
+}
+
+function TaskCard(props) {
   const task = props.task;
 
   return ( 
@@ -10,7 +15,7 @@ const TaskCard = (props) => {
       subTitle={task.title}
       style={cardStyle}
     >
-      <p> {task.body} </p>
+      <p> {abridgeText(task.body, 100)} </p>
     </Card>
   );
 }
