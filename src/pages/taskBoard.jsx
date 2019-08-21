@@ -23,11 +23,12 @@ function TaskBoard(props) {
 
 const boardStyles = {
     display: 'flex',
-    height: '90vh',
+    height: '92vh',
     flexWrap: 'nowrap',
-    overflowX: 'auto',
+    overflowX: 'hidden',
     overflowY: 'auto',
-    padding: '2em 25px'
+    margin: '.5em',
+    padding: '25px',
 }
 
 export default TaskBoard;
