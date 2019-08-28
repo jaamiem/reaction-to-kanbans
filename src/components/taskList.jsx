@@ -3,10 +3,6 @@ import TaskCard from './taskCard.jsx';
 import AddTaskCard from './addTaskCard.jsx';
 import { ScrollPanel } from 'primereact/scrollpanel';
 
-// const handleAddTaskClick = () => {
-  
-// }
-
 function TaskList(props) {
 
   return (
@@ -23,6 +19,11 @@ function TaskList(props) {
     </div >  
   );
 }
+
+
+
+
+
 
 const listStyle = {
   width: '20%',

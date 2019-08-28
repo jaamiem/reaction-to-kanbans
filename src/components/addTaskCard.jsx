@@ -31,12 +31,3 @@ class AddTaskCard extends Component {
 }
  
 export default AddTaskCard;
-
-// function AddTaskCard(props) {
-//   const [newTask, changeTask] = useState({
-//     value: '',
-
-  
-// }
- 
-// export default AddTaskCard;

@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskList from '../components/taskList.jsx'
+import FilterBar from '../components/taskListFilterBar.jsx';
 
 function splitTasksByUserID(tasks){
     const userTasks = []; 

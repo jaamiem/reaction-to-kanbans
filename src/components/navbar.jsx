@@ -11,6 +11,9 @@ function Navbar() {
           <li className="nav-item ml-4">
             <Link className="nav-link" to="/">Home</Link>
           </li>
+          <li className="nav-item ml-4">
+            <Link className="nav-link" to="/counter">Counter</Link>
+          </li>
         </ul>
       </div>
     </nav> 
