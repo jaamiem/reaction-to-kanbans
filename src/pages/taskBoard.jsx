@@ -3,11 +3,13 @@ import TaskList from '../components/taskList.jsx'
 import FilterBar from '../components/taskListFilterBar.jsx';
 
 function splitTasksByUserID(tasks){
-    const userTasks = []; 
-    [...new Set(tasks.map(x => x.userId))].forEach(id => {
-        userTasks.push(tasks.filter(x => x.userId === id));
+    const userTaskLists = [];
+    const uniqueIDs = [...new Set(tasks.map(x => x.userId))];
+    uniqueIDs.forEach(id => {
+        const tasksByID = tasks.filter(x => x.userId === id)
+        userTaskLists.push(tasksByID);
     });
-    return userTasks; 
+    return userTaskLists; 
 }
 
 function TaskBoard(props) {
