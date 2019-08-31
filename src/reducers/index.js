@@ -3,7 +3,7 @@ import taskReducer from './taskReducer.js';
 import counterReducer from './counterReducer.js';
 
 const rootReducer = combineReducers({
-    task: taskReducer,
+    tasks: taskReducer,
     counter: counterReducer,
 });
 

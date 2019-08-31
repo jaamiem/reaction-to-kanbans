@@ -20,14 +20,19 @@ class AddTaskCard extends Component {
   render() { 
     return ( 
       <form onSubmit={this.handleSubmit}>
-        <div className='p-inputgroup'>
+        <div className='p-inputgroup' style={styles}>
           <InputText type='text' placeholder='Add New Task...' value={this.state.value} onChange={this.handleChange} />
           <Button icon='pi pi-check' className='p-button-primary' type='submit' />
+          <Button icon='pi pi-times' className='p-button-secondary' type='submit' />
           <Button icon='pi pi-times' className='p-button-secondary' type='submit' />
         </div>
       </form>
     );
   }
+}
+
+const styles = {
+  width: '100%',
 }
  
 export default AddTaskCard;

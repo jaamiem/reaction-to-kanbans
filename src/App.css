@@ -11,15 +11,10 @@ body {
 	line-height: 1.4;
 	position: absolute;
 	top: 40px;
+	width: 98%;
 }
 
 a {
 	color: #333;
 	text-decoration: none;
-}
-
-.wrapper {
-	width: 80%;
-	margin: auto;
-	padding-top: 50px;
 }

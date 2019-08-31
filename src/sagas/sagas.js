@@ -1,29 +1,31 @@
 import { put, takeEvery, all, call } from 'redux-saga/effects';
-import axios from 'axios';
+import { watchGetTasksSaga } from './getTasks-saga.js';
+// import axios from 'axios';
 
 export const delay = ms => new Promise(res => setTimeout(res, ms));
-
-export const fetchUsers = (url) => {
-    axios.get(url)
-		.then(res => res.data)
-		.catch(err => console.error(err));
-}
 
 // Root
 export default function* rootSaga() {
     yield all([
+        watchGetTasksSaga(),
         watchIncrementAsync(),
     ]);
 }
 
-// Data
-export function* fetchData(action) {
-    try {
-        // const data
-    } catch(e) {
-        yield put({ type: 'FETCH_FAILED', e })
-    }
-}
+// export const fetchUsers = (url) => {
+//     axios.get('https://jsonplaceholder.typicode.com/posts?_limit=70')
+// 		.then(res => res.data)
+// 		.catch(err => console.error(err));
+// }
+
+// // Data
+// export function* fetchData(action) {
+//     try {
+//         // const data
+//     } catch(e) {
+//         yield put({ type: 'FETCH_FAILED', e })
+//     }
+// }
 
 // Counter
 export function* incrementAsync() {

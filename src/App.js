@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 import TaskBoard from './pages/taskBoard.jsx';
 import Navbar from './components/navbar.jsx';
@@ -17,11 +17,11 @@ import 'primeicons/primeicons.css';
 
 
 function App() {
-	const [taskListState, changeTaskList] = useState([]);
+	// const [taskListState, changeTaskList] = useState([]);
 
-	axios.get('https://jsonplaceholder.typicode.com/posts?_limit=70')
-		.then(res => changeTaskList(res.data))
-		.catch(err => console.error(err));
+	// axios.get('https://google.com')
+	// 	.then(res => changeTaskList(res.data))
+	// 	.catch(err => console.error(err));
 
 	const counter = useSelector(state => state.counter);
 
@@ -33,7 +33,7 @@ function App() {
 					path='/' 
 					exact 
 					render={(props) => 
-						<TaskBoard taskListState={taskListState} />
+						<TaskBoard />
 				} />
 				<Route
 					path='/counter'

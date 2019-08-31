@@ -1,37 +1,48 @@
 import React from 'react';
-import TaskList from '../components/taskList.jsx'
+import { connect } from 'react-redux';
+
 import FilterBar from '../components/taskListFilterBar.jsx';
+import TaskListDisplay from '../components/taskListDisplay.jsx';
 
-function splitTasksByUserID(tasks){
-    const userTaskLists = [];
-    const uniqueIDs = [...new Set(tasks.map(x => x.userId))];
-    uniqueIDs.forEach(id => {
-        const tasksByID = tasks.filter(x => x.userId === id)
-        userTaskLists.push(tasksByID);
-    });
-    return userTaskLists; 
+const styles = {}
+
+class TaskBoard extends React.Component {
+
+    componentDidMount() {
+        const {taskRows, loadTasks} = this.props;
+        console.log('props', this.props)
+
+        if(!taskRows) {
+            loadTasks();
+        }
+        else if(taskRows < 1) loadTasks();
+    }
+
+
+    render(){
+        // console.log('here', this.props.taskRows)
+        return (
+            <div styles={styles} >
+                <FilterBar style={{ width: '100%' }} />
+                <TaskListDisplay taskRows={this.props.taskRows} />
+            </div>
+        );
+    }
 }
 
-function TaskBoard(props) {
-    const userTasks = splitTasksByUserID(props.taskListState);
-
-    return (
-        <div style={boardStyles}>
-            {userTasks.map(taskList => 
-                <TaskList key={taskList[0].userId} taskListState={taskList} />
-            )}
-        </div>
-    );
+const mapStateToProps = state => {
+    const { tasks } = state;
+    return {
+        taskRows: tasks.rows,
+    };
 }
 
-const boardStyles = {
-    display: 'flex',
-    height: '92vh',
-    flexWrap: 'nowrap',
-    overflowX: 'hidden',
-    overflowY: 'auto',
-    margin: '.5em',
-    padding: '25px',
+const mapDispatchToProps = dispatch => {
+    return {
+        loadTasks: () => {
+            dispatch({ type: 'TASKS_GET_REQUEST' });
+        },
+    }
 }
 
-export default TaskBoard;
+export default connect(mapStateToProps, mapDispatchToProps)(TaskBoard);
