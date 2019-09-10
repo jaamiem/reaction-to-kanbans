@@ -15,15 +15,16 @@ class taskListFilterBar extends Component {
                     <form>
                         {this.filterInput('taskIdFilter', 'Task ID:', 'Task ID...')}
                         {this.filterInput('userFilter', 'User:', 'By User...')}
-                        {this.filterInput('custFilter', 'Customer:', 'By customer...')}
+                        {/* {this.filterInput('custFilter', 'Customer:', 'By customer...')}
                         {this.filterInput('createdByFilter', 'Created By:', 'Created by...')}
-                        {this.filterInput('filter5', '', 'filter5...')}
+                        {this.filterInput('filter5', '', 'filter5...')} */}
                     </form>
                 </Card.Body>
             </Card>
         )
     }
 
+    // Returns an input field w/ label
     filterInput = (name, label, placeholder) => 
         <div style={styles.input}>
             <label>{ label }</label>
@@ -43,7 +44,6 @@ const styles = {
     },
     card: {
         display: 'flex',
-        paddingTop: '20px'
     }
 }
 

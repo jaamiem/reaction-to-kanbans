@@ -1,41 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TaskCard from './taskCard.jsx';
 import AddTaskCard from './addTaskCard.jsx';
 import { ScrollPanel } from 'primereact/scrollpanel';
+import { Dialog } from 'primereact/dialog';
 
 function TaskList(props) {
+	const [modalVisible, toggleVisible] = useState(false);
+	const [currentModalTask, changeModalTask] = useState({
+		userId: 0,
+		id: 0,
+		title: '',
+		body: '',
+		key: 0,
+		completed: false,
+	});
 
-  return (
-    <div style={styles.listContainer} >
+	const handleDelete = (e) => {
+	}
 
-      <h4> User {props.taskRows[0].userId} </h4>
+	const handleToggleComplete = (e) => {
+	}
 
-      <ScrollPanel style={styles.list} >
+	// const handleMovePosition = (e) => {}
 
-        {props.taskRows.map(task =>
-        <TaskCard key={task.id} task={task} />
-        )}
+	const handleModal = (task) => {
+		changeModalTask(task);
+		toggleVisible(true);
+	}
 
-      </ScrollPanel>
+	return (
+		<div style={styles.listContainer} draggable>
 
-      <AddTaskCard />
-    </div >  
-  );
+			<div style={styles.listHeader}>
+				<h4> User {props.taskRows[0].userId} </h4>
+			</div>
+
+			<ScrollPanel style={styles.list} >
+				{props.taskRows.map(task =>
+					<TaskCard 
+						key={ task.id } 
+						task={ task } 
+						onDelete={ handleDelete }
+						onToggleComplete={ handleToggleComplete }
+						// onMovePosition={ handleMovePosition }
+						onOpenModal={ handleModal }
+					/>
+				)}
+			</ScrollPanel>
+			<Dialog 
+				visible={modalVisible}
+				header={currentModalTask.title} 
+				modal={true}
+				dismissableMask={true}
+				onHide={() => toggleVisible(false)}>
+				{ currentModalTask.title }
+			</Dialog>
+
+			<AddTaskCard />
+		</div >  
+	);
 }
 
 
 const styles = {
-  listContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '20%',
-    minWidth: '450px',
-    marginRight: '1em',
-  },
-  list: { 
-    height: '100%',
-    background: '#ededed',
-  }
+	listContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		// vvvvv  replace with flex
+		width: '20%',
+		minWidth: '450px',
+		marginRight: '1em',
+		// ^^^^^^
+		border: '1px solid #ccc',
+		borderRadius: '5px 5px 5px 5px',
+		overflow: 'hidden',
+	},
+	listHeader: {
+		width: '100%',
+		backgroundColor: 'white',
+		height: '3em',
+		textAlign: 'center',
+		borderBottom: '1.5px solid #ccc',
+	},
+	list: { 
+		height: '100%',
+		background: '#ededed',
+	}
 }
  
 export default TaskList;
