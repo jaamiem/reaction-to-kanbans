@@ -23,15 +23,15 @@ function TaskList(props) {
 
 	// const handleMovePosition = (e) => {}
 
-	const handleModal = (task) => {
+	const handleOpenModal = (task) => {
 		changeModalTask(task);
 		toggleVisible(true);
 	}
 
 	return (
-		<div style={styles.listContainer} draggable>
+		<div style={styles.listContainer} >
 
-			<div style={styles.listHeader}>
+			<div style={styles.listHeader} draggable>
 				<h4> User {props.taskRows[0].userId} </h4>
 			</div>
 
@@ -43,7 +43,7 @@ function TaskList(props) {
 						onDelete={ handleDelete }
 						onToggleComplete={ handleToggleComplete }
 						// onMovePosition={ handleMovePosition }
-						onOpenModal={ handleModal }
+						onOpenModal={ handleOpenModal }
 					/>
 				)}
 			</ScrollPanel>

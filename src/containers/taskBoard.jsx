@@ -21,6 +21,7 @@ class TaskBoard extends React.Component {
 	render() {
 		return (
 			<div style={styles} >
+				{/* Filter Bar can become HOC?? */}
 				<FilterBar style={{ width: '100%' }} />
 				<TaskListDisplay taskRows={this.props.taskRows} />
 			</div>

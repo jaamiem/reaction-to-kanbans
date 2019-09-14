@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button'
 
@@ -36,8 +37,8 @@ function TaskCard(props) {
 					{/* Prime icon button bar */}
 					{/* { piButton('angle-up', props.onMovePosition, 'primary', styles.posControl) }
 					{ piButton('angle-down', props.onMovePosition, 'primary', styles.posControl) } */}
-					{ piButton('trash', props.onDelete, 'secondary') }
 					{ piButton('window-maximize', props.onOpenModal.bind(null, task), 'secondary') }
+					{ piButton('trash', (e) => {props.deleteTask(task.id)}, 'secondary') }
 					{ piButton('check', props.onToggleComplete, 'success') }
 				</div>
 			</div>
@@ -54,11 +55,6 @@ function TaskCard(props) {
 }
 
 const styles = {
-	// posControl: {
-	// 	height: '40%',
-	// 	width: '50%',
-	// 	position: 'relative'
-	// },
 	card: {
 		flex: '0 0 15%',
 		margin: '.35rem .25em',
@@ -81,5 +77,12 @@ const styles = {
 		}
 	},
 }
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		deleteTask: (id) => { dispatch({ type: 'TASK_DELETE_REQUEST', payload: { id }}); console.log('here', id) },
+		toggleComplete: (id) => { dispatch({ type: 'TASK_TOGGLE_COMPLETE', id }) },
+	}
+}
  
-export default /*connect(null, null)*/(TaskCard);
+export default connect(null, mapDispatchToProps)(TaskCard);

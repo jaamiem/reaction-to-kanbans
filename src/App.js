@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import TaskBoard from './pages/taskBoard.jsx';
+import TaskBoard from './containers/taskBoard.jsx';
 
 // import { action } from './store.js';
 // import { useSelector } from 'react-redux';
