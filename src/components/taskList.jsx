@@ -1,27 +1,17 @@
 import React, { useState } from 'react';
+
+import TaskManipulator from './taskManipulator.jsx';
 import TaskCard from './taskCard.jsx';
 import AddTaskCard from './addTaskCard.jsx';
+import TaskModal from './taskModal.jsx'
+
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { Dialog } from 'primereact/dialog';
+import Tabs from 'react-bootstrap/Tabs'
 
 function TaskList(props) {
 	const [modalVisible, toggleVisible] = useState(false);
-	const [currentModalTask, changeModalTask] = useState({
-		userId: 0,
-		id: 0,
-		title: '',
-		body: '',
-		key: 0,
-		completed: false,
-	});
-
-	const handleDelete = (e) => {
-	}
-
-	const handleToggleComplete = (e) => {
-	}
-
-	// const handleMovePosition = (e) => {}
+	const [currentModalTask, changeModalTask] = useState({});
 
 	const handleOpenModal = (task) => {
 		changeModalTask(task);
@@ -34,26 +24,39 @@ function TaskList(props) {
 			<div style={styles.listHeader} draggable>
 				<h4> User {props.taskRows[0].userId} </h4>
 			</div>
-
+			<Tabs id='listTabs'>
+				{ /* completed/open lists */  }
+			</Tabs> 
 			<ScrollPanel style={styles.list} >
 				{props.taskRows.map(task =>
-					<TaskCard 
-						key={ task.id } 
-						task={ task } 
-						onDelete={ handleDelete }
-						onToggleComplete={ handleToggleComplete }
-						// onMovePosition={ handleMovePosition }
-						onOpenModal={ handleOpenModal }
+					<TaskManipulator
+						key={ task.id }
+						render={(props) =>
+							<TaskCard
+								{...props}
+								task={ task }
+								onOpenModal={ handleOpenModal }
+							/>
+						}
 					/>
 				)}
 			</ScrollPanel>
+
 			<Dialog 
 				visible={modalVisible}
-				header={currentModalTask.title} 
+				header={`User ${currentModalTask.userId} - task ${currentModalTask.id}`} 
 				modal={true}
 				dismissableMask={true}
-				onHide={() => toggleVisible(false)}>
-				{ currentModalTask.title }
+				onHide={() => toggleVisible(false)}
+			>
+				<TaskManipulator render={(props) => 
+					<TaskModal
+						{...props}
+						handleVisible={ toggleVisible }
+						task={ currentModalTask }
+					/>
+				} />
+				
 			</Dialog>
 
 			<AddTaskCard />
@@ -80,7 +83,7 @@ const styles = {
 		backgroundColor: 'white',
 		height: '3em',
 		textAlign: 'center',
-		borderBottom: '1.5px solid #ccc',
+		// borderBottom: '1.5px solid #ccc',
 	},
 	list: { 
 		height: '100%',

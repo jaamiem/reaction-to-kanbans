@@ -1,62 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 // import { Chips } from 'primereact/chips';
 
-class AddTaskCard extends Component {
-	getInitialState = () => {
+function AddTaskCard(props) {
+	const getInitialFormState = () => {
 		return {
 			title: '',
 			body: '',
 			author: '',
 			customers: [],
-			assignedTo: [],	
-			togglePanel: false,
+			assignedTo: [],
 		}
 	}
 
-	state = this.getInitialState();
+	const [toggleState, changeToggle] = useState(false);
+	const [formDataState, changeFormData] = useState(getInitialFormState())
 	
 	// Map change of input field into state.[field name]
-	handleChange = (event) => {
-		this.setState({ [event.target.name]: event.target.value });
+	const handleChange = (event) => {
+		changeFormData({...formDataState, [event.target.name]: event.target.value});
 	}
 
-	// Display when focus input field, toggle when button clicked 
-	toggleDataPanel = (event) => {
-		let newToggle = this.state.togglePanel;
+	// Display when focus input field, toggle when button clicked
+	const toggleDataPanel = (event) => {
+		let newToggle = toggleState;
 
 		if(event.target.name === 'title') newToggle = true;
 		else newToggle = !newToggle;
 
-		this.setState(prevState => ({ togglePanel: newToggle }))
+		changeToggle(newToggle);
 	}
 
 	// Styles for toggling the new task panel
-	getPanelStyle = () => {
+	const getPanelStyle = () => {
 		return {
-			display: this.state.togglePanel ? 'flex' : 'none',
+			display: toggleState ? 'flex' : 'none',
 			flexDirection: 'column'
 		};
 	}
 
-	handleSubmit = (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		console.log(`new task submitted: ${this.state.value}`);
-		this.setState({ ...this.state });
+		props.addTask(formDataState);
 	}
 
-	clearInput = () => {
-		const newState = this.getInitialState();
-		this.setState({ ...newState })
+	const clearInput = () => {
+		const newState = getInitialFormState();
+		changeFormData(newState);
 	}
 
-	inputField = (name, placeholder, onFocus = undefined, onChange = this.handleChange) => (
+	const inputField = (name, placeholder, onFocus = undefined, onChange = handleChange) => (
 		<InputText
 			name={ name }
 			placeholder={ placeholder }
-			value={ this.state[name] } 
+			value={ formDataState[name] } 
 			onChange={ onChange }
 			onFocus={ onFocus }
 			style={ styles.input } 
@@ -64,45 +65,46 @@ class AddTaskCard extends Component {
 		/>
 	);
 
-	render() { 
-		return (
-			<React.Fragment>
-				<Button 
-					icon={`pi pi-chevron-${this.state.togglePanel ? 'down' : 'up'}`}
-					className='p-button-secondary' 
-					onClick={this.toggleDataPanel} 
-					style={ styles.panelButton } 
-				/>
-				<form onSubmit={this.handleSubmit}>
-					<div className='p-inputgroup'>
-						{ 
-							this.inputField(
-								'title', 
-								`${this.state.togglePanel ? 'Title...' : 'Add New Task'}`,
-								this.toggleDataPanel )
-						}
+	// render() { 
+	return (
+		<React.Fragment>
+			<Button 
+				icon={`pi pi-chevron-${toggleState ? 'down' : 'up'}`}
+				className='p-button-secondary' 
+				onClick={toggleDataPanel} 
+				style={ styles.panelButton } 
+			/>
+			<form onSubmit={handleSubmit}>
+				<div className='p-inputgroup'>
+					{ 
+						inputField(
+							'title', 
+							`${toggleState ? 'Title...' : 'Add New Task'}`,
+							(e) => {toggleDataPanel(e)} )
+					}
 
-						<Button icon='pi pi-check' className='p-button-primary' type='submit' />
-						<Button icon='pi pi-times' className='p-button-secondary' onClick={this.clearInput} type='button' />
-						<Button icon='pi pi-window-maximize' className='p-button-secondary' type='button'/>
-					</div>
-					<div id='formPanel' style={ this.getPanelStyle() }>
-						{ this.inputField('body', 'Task Description...') }
-						{ this.inputField('author', 'Created By...') }
-						{ this.inputField('customers', 'Customers...') }
-						{ this.inputField('assignedTo', 'Assigned To...') }
-					</div>
-				</form>
-			</React.Fragment>
-		);
-	}
+					<Button icon='pi pi-check' className='p-button-primary' type='submit' />
+					<Button icon='pi pi-times' className='p-button-secondary' onClick={clearInput} type='button' />
+					<Button icon='pi pi-window-maximize' className='p-button-secondary' type='button' style={{ borderRadius: '0px' }} />
+				</div>
+				<div id='formPanel' style={ getPanelStyle() }>
+					{ inputField('body', 'Task Description...') }
+					{ inputField('author', 'Created By...') }
+					{ inputField('customers', 'Customers...') }
+					{ inputField('assignedTo', 'Assigned To...') }
+				</div>
+			</form>
+		</React.Fragment>
+	);
+	// }
 }
 
 const styles = {
 	input: {
 		flex: '1',
 		zIndex: '1',
-		
+		borderRadius: '0px',
+		// marginBottom: '.3em',
 	},
 	panelButton: {
 		width: '100%', 
@@ -110,5 +112,11 @@ const styles = {
 		borderRadius: '0px',
 	}
 }
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addTask: (data) => { dispatch({ type: 'TASK_NEW_REQUEST', payload: data }) }
+	}
+}
  
-export default AddTaskCard;
+export default connect(null, mapDispatchToProps)(AddTaskCard);

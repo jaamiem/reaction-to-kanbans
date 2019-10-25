@@ -6,6 +6,7 @@ const initialState = {
 }
 
 const getTaskReducer = (state = initialState, action) => {
+	// console.log(action)
     switch(action.type){
         case 'TASKS_GET_REQUEST':
             return { ...state, fetching: true, error: null };

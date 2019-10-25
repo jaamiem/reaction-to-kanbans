@@ -1,29 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { Card } from 'primereact/card';
-import { Button } from 'primereact/button'
+// import { Button } from 'primereact/button'
 
 // Restrict length of display text
-function abridgeText(text, length) {
+function trimText(text, length) {
 	return (text.length > length) ? 
-		(text.slice(0,length) + '...') : text;
+		`${text.slice(0,length)}...` : text;
 }
 
-// function hasComments(task) {
-// 	let val = task.comments ? task.comments.length : 'No ';
-// 	return <span style={styles.card.footer}><p>{val} Comments</p></span>
-// }
-
-const piButton = (icon, onClick = undefined, severity, style, disabled = false) => (
-	<Button 
-		icon={ `pi pi-${icon}` }
-		onClick={ onClick } 
-		className={`p-button-${severity}`}
-		disabled={ disabled }
-		style={ style }
-	/>
-);
-
+// Refactor to pure component?
 function TaskCard(props) {
 	const task = props.task;
 
@@ -31,24 +17,21 @@ function TaskCard(props) {
 		<Card style={styles.card}>
 			<div style={styles.topBar}>
 				<h5 style={styles.topBar.title}>
-					{ abridgeText(task.title, 50) }
+					{ trimText(task.title, 50) } - { `${task.completed}` }
 				</h5>
 				<div style={styles.topBar.controls} className='p-inputgroup'>
-					{/* Prime icon button bar */}
-					{/* { piButton('angle-up', props.onMovePosition, 'primary', styles.posControl) }
-					{ piButton('angle-down', props.onMovePosition, 'primary', styles.posControl) } */}
-					{ piButton('window-maximize', props.onOpenModal.bind(null, task), 'secondary') }
-					{ piButton('trash', (e) => {props.deleteTask(task.id)}, 'secondary') }
-					{ piButton('check', props.onToggleComplete, 'success') }
+					{ props.piButton('window-maximize',() => props.onOpenModal(task), 'secondary') /* consistancy with bind/anon func */}  
+					{ props.piButton('trash', () => props.deleteTask(task), 'secondary') }
+					{ props.piButton('check', () => props.putTask({ ...task, completed: !task.completed }), 'success') }
 				</div>
 			</div>
 			<hr/>
-			<p> { abridgeText(task.body, 100) } </p>
-			{/* {hasComments(task)} */}
-			{ task.comments &&
-				<span style={styles.card.footer}>
-					<p>{task.comments.length} Comments</p>
-				</span>
+			<p> { trimText(task.body, 150) } </p>
+			{ 
+				task.comments &&
+					<span style={styles.card.footer}>
+						<p>{task.comments.length} Comments</p>
+					</span>
 			}
 		</Card>
 	);
@@ -78,11 +61,12 @@ const styles = {
 	},
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		deleteTask: (id) => { dispatch({ type: 'TASK_DELETE_REQUEST', payload: { id }}); console.log('here', id) },
-		toggleComplete: (id) => { dispatch({ type: 'TASK_TOGGLE_COMPLETE', id }) },
-	}
-}
+// const mapDispatchToProps = (dispatch) => {
+// 	return {
+// 		deleteTask: (id) => { dispatch({ type: 'TASK_DELETE_REQUEST', payload: { id }}) },
+// 		toggleComplete: (id) => { dispatch({ type: 'TASK_TOGGLE_COMPLETE', id }) },
+// 	}
+// }
  
-export default connect(null, mapDispatchToProps)(TaskCard);
+export default (TaskCard);
+// connect(null, mapDispatchToProps)

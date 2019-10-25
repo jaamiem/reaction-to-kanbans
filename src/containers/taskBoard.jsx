@@ -1,29 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import FilterBar from '../components/taskListFilterBar.jsx';
 import TaskListDisplay from '../components/taskListDisplay.jsx';
 
-
-
 class TaskBoard extends React.Component {
-	
-	componentDidMount() {
-		const {taskRows, loadTasks} = this.props;
-		console.log('props', this.props)
-
-		if(!taskRows) {
-			loadTasks();
-		}
-		else if(taskRows < 1) loadTasks();
-	}
-
 	render() {
 		return (
 			<div style={styles} >
-				{/* Filter Bar can become HOC?? */}
-				<FilterBar style={{ width: '100%' }} />
-				<TaskListDisplay taskRows={this.props.taskRows} />
+				<FilterBar style={{ width: '100%' }}
+					render={(props) => 
+						<TaskListDisplay {...props}	/>
+				}/>
 			</div>
 		);
 	}
@@ -37,19 +25,20 @@ const styles = {
 	borderRadius: '6px'
 }
 
-const mapStateToProps = state => {
-	const { tasks } = state;
-	return {
-		taskRows: tasks.rows,
-	};
-}
+// const mapStateToProps = state => {
+// 	const { task } = state;
+// 	// console.log('here!', task.rows)
+// 	return {
+// 		taskRows: task.rows,
+// 	};
+// }
 
-const mapDispatchToProps = dispatch => {
-	return {
-		loadTasks: () => {
-			dispatch({ type: 'TASKS_GET_REQUEST' });
-		},
-	};
-}
+// const mapDispatchToProps = dispatch => {
+// 	return {
+// 		loadTasks: () => {
+// 			dispatch({ type: 'TASKS_GET_REQUEST' });
+// 		},
+// 	};
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskBoard);
+export default (TaskBoard);

@@ -6,7 +6,7 @@ export async function getTasks() {
 
 		// Add Key value to data
 		result.data.map(v => v.key = v.id);
-		result.data.map(v => v.completed = false);
+		result.data.map(x => x.completed = false);
 		return result.data;
 	} catch(e) {
 		console.log("api: getTasks: The back end didn't respond to the tasks request...");

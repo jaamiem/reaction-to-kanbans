@@ -7,6 +7,7 @@ import TaskBoard from './containers/taskBoard.jsx';
 // import { action } from './store.js';
 // import { useSelector } from 'react-redux';
 
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';

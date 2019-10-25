@@ -8,7 +8,7 @@ export function* watchGetTasksSaga() {
 function* getTasksWorkerSaga() {
     try {
         const response = yield call(getTasks);
-        yield put({ type: 'TASKS_GET_SUCCESS', rows: response });
+        yield put({ type: 'TASKS_GET_SUCCESS', tasks: response });
 
     } catch(err) {
         console.log('getTaskWorkerSaga Error: ');
